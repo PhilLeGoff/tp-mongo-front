@@ -17,6 +17,7 @@ export default function AnalyticsPanel() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+
       <div className="bg-gray-800 p-4 rounded-xl">
         <h2 className="text-xl font-bold mb-2">🎭 Most Common Genres</h2>
         <ul>
