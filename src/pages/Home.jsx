@@ -2,6 +2,7 @@ import SearchBar from "../components/SearchBar";
 import MovieGrid from "../components/MovieGrid";
 import AnalyticsPanel from "../components/AnalyticsPanel";
 import TopLists from "../components/TopLists";
+import PowerBIEmbed from '../components/PowerBI';
 
 export default function Home() {
   return (
@@ -10,6 +11,10 @@ export default function Home() {
       <SearchBar />
       <AnalyticsPanel />
       <TopLists />
+      <div className="my-8">
+        <h2 className="text-2xl font-semibold mb-4 text-center">📊 Movie Data Dashboard</h2>
+        <PowerBIEmbed />
+      </div>
       <MovieGrid />
     </div>
   );
