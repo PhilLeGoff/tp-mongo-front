@@ -9,6 +9,7 @@ import Recommendations from "./pages/Recommendations.jsx";
 import Header from "./components/Header.jsx";
 import "./index.css";
 import Footer from "./components/Footer.jsx";
+import Explore from "./pages/Explore.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,11 +18,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/explore" element={<Explore />} />
         <Route path="/rankings" element={<Rankings />} />
         <Route path="/details" element={<MovieDetails />} />
         <Route path="/recommendations" element={<Recommendations />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   </React.StrictMode>
 );

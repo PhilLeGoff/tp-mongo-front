@@ -41,6 +41,16 @@ export const MovieService = {
       console.error("MovieService > getHottest:", err);
       return [];
     }
+  },
+
+  async getExploreSection(endpoint) {
+    try {
+      const res = await axios.get(`${BASE_URL}/${endpoint}`);
+      return res.data;
+    } catch (err) {
+      console.error(`Error fetching ${endpoint}:`, err);
+      return [];
+    }
   }
 };
 
