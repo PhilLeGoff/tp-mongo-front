@@ -27,6 +27,10 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mb-4 text-center">🔥 Top Movies by Original Language</h2>
         <PowerBIEmbed src="https://app.powerbi.com/reportEmbed?reportId=171f5c1b-20fa-4251-98a9-54d0604373db&autoAuth=true&ctid=108bc864-cdf5-4ec3-8b7c-4eb06be1b41d&pageName=a24a5b2e617176494116&navContentPaneEnabled=false" />
       </div>
+      <div className="my-8">
+        <h2 className="text-2xl font-semibold mb-4 text-center">🔥 Top Movie Title Word</h2>
+        <PowerBIEmbed src="https://app.powerbi.com/reportEmbed?reportId=171f5c1b-20fa-4251-98a9-54d0604373db&autoAuth=true&ctid=108bc864-cdf5-4ec3-8b7c-4eb06be1b41d&pageName=6239a1fd4bdc53f2923e&navContentPaneEnabled=false" />
+      </div>
       <MovieGrid />
     </div>
   );
