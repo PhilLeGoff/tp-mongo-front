@@ -8,6 +8,7 @@ import MovieDetails from "./pages/MovieDetails.jsx";
 import Recommendations from "./pages/Recommendations.jsx";
 import Header from "./components/Header.jsx";
 import "./index.css";
+import Footer from "./components/Footer.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/details" element={<MovieDetails />} />
         <Route path="/recommendations" element={<Recommendations />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
   </React.StrictMode>
 );
