@@ -11,9 +11,9 @@ export default function HottestSlider() {
   }, []);
 
   return (
-    <div className="my-10 px-4">
-      <h2 className="text-2xl font-bold mb-4 text-cyan-400">
-        🏆 Hottest Movies
+    <div className="mb-12 pt-10">
+      <h2 className="text-3xl font-bold mb-6 text-cyan-400 text-center drop-shadow">
+        🔥 Hottest Movies This Season
       </h2>
       <Swiper
         spaceBetween={16}
@@ -26,7 +26,7 @@ export default function HottestSlider() {
       >
         {movies.map((movie, index) => (
           <SwiperSlide key={index}>
-            <div className="bg-[#1e293b] text-white rounded-lg overflow-hidden shadow-md max-w-[300px] mx-auto">
+            <div className="bg-gradient-to-br from-[#1e293b] to-[#0f172a] text-white rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105">
               <div className="aspect-[2/3]">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -34,9 +34,9 @@ export default function HottestSlider() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="p-2">
+              <div className="p-3">
                 <h3 className="font-semibold text-sm truncate">{movie.title}</h3>
-                <p className="text-xs text-gray-400">⭐ {movie.vote_average}</p>
+                <p className="text-xs text-cyan-300 mt-1">⭐ {movie.vote_average}</p>
               </div>
             </div>
           </SwiperSlide>
@@ -45,3 +45,4 @@ export default function HottestSlider() {
     </div>
   );
 }
+

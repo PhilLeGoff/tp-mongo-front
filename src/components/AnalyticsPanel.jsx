@@ -32,50 +32,53 @@ export default function AnalyticsPanel() {
   }));
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-      <AnalyticsSection
-        title="🎭 Most Appreciated Genres"
-        data={genreChartData}
-        label="Average Rating"
-      />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+  <AnalyticsSection
+    title="🎭 Most Appreciated Genres"
+    data={genreChartData}
+    label="Average Rating"
+  />
+  <AnalyticsSection
+    title="📆 Best Movie per Decade"
+    data={decadeChartData}
+    label="Top Movie Rating"
+  />
+  <AnalyticsSection
+    title="🏆 Top Rated Movies"
+    data={topRatedChartData}
+    label="Rating"
+    className="md:col-span-2"
+  />
 
-      <AnalyticsSection
-        title="📆 Best Movie per Decade"
-        data={decadeChartData}
-        label="Top Movie Rating"
-      />
+  {/* 🎉 Hidden Gems */}
+  <div className="bg-gradient-to-br from-[#1e293b] to-[#0f172a] p-6 rounded-xl md:col-span-2 shadow-lg">
+    <h2 className="text-xl font-bold mb-2 text-white">🎉 Hidden Gems</h2>
+    <p className="text-sm text-gray-400 mb-4">
+      High rating, low exposure 👇
+    </p>
+    <Swiper spaceBetween={20} slidesPerView={3}>
+      {data.surprise.map((movie, i) => (
+        <SwiperSlide key={i}>
+          <div className="bg-[#1e293b] text-white rounded-lg overflow-hidden shadow-md transition hover:shadow-xl">
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              className="w-full h-72 object-cover"
+            />
+            <div className="p-4">
+              <h3 className="font-semibold text-lg truncate">
+                {movie.title}
+              </h3>
+              <p className="text-sm text-gray-400">
+                ⭐ {movie.vote_average} ({movie.vote_count} votes)
+              </p>
+            </div>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+</div>
 
-      <AnalyticsSection
-        title="🏆 Top Rated Movies"
-        data={topRatedChartData}
-        label="Rating"
-        className="md:col-span-2"
-      />
-
-      {/* 🎉 Hidden Gems */}
-      <div className="bg-gray-800 p-4 rounded-xl md:col-span-2">
-        <h2 className="text-xl font-bold mb-2 text-white">🎉 Hidden Gems</h2>
-        <p className="text-sm text-gray-400 mb-4">High rating, low exposure 👇</p>
-        <Swiper spaceBetween={20} slidesPerView={3}>
-          {data.surprise.map((movie, i) => (
-            <SwiperSlide key={i}>
-              <div className="bg-[#1e293b] text-white rounded-lg overflow-hidden shadow-md">
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={movie.title}
-                  className="w-full h-72 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg truncate">{movie.title}</h3>
-                  <p className="text-sm text-gray-400">
-                    ⭐ {movie.vote_average} ({movie.vote_count} votes)
-                  </p>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </div>
   );
 }

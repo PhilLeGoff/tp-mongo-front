@@ -1,34 +1,44 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   const linkBase =
-  "px-4 py-2 rounded-md font-medium text-sm transition-colors duration-150 no-underline text-black visited:text-black";
+    "px-4 py-1 rounded-full font-medium text-sm transition-colors duration-150 backdrop-blur-sm";
 
   const getLinkClass = ({ isActive }) =>
     isActive
-      ? `${linkBase} text-red-600 font-semibold`
-      : `${linkBase} text-black hover:text-red-500`;
+      ? `${linkBase} bg-cyan-500/90 text-white shadow-md`
+      : `${linkBase} text-gray-200 hover:text-white hover:bg-cyan-500/30`;
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
-        <h1 className="text-2xl font-bold text-black">🎬 Movie Explorer</h1>
-        <nav className="flex flex-wrap gap-4 mt-2 sm:mt-0">
+    <header className="bg-gradient-to-r from-[#0f172a] via-[#112b3c] to-[#0f172a] shadow-lg border-b-2 border-cyan-400 sticky top-0 z-50 px-4">
+      <div className="max-full mx-auto py-4 grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+        {/* Logo à gauche */}
+        <div className="flex justify-center">
+          <h1 className="text-2xl font-bold text-cyan-400 tracking-wide drop-shadow">
+            🎬 Movie Explorer
+          </h1>
+        </div>
+
+        {/* SearchBar au centre */}
+        <div className="flex justify-center">
+          <SearchBar />
+        </div>
+
+        {/* Navigation à droite */}
+        <nav className="flex justify-center flex-wrap gap-3 mt-2 sm:mt-0">
           <NavLink to="/" className={getLinkClass}>
-            Search
+            Home
+          </NavLink>
+          <NavLink to="/explore" className={getLinkClass}>
+            Explore
           </NavLink>
           <NavLink to="/analytics" className={getLinkClass}>
             Analytics
           </NavLink>
           <NavLink to="/rankings" className={getLinkClass}>
             Rankings
-          </NavLink>
-          <NavLink to="/details" className={getLinkClass}>
-            Movie Details
-          </NavLink>
-          <NavLink to="/recommendations" className={getLinkClass}>
-            Recommendations
           </NavLink>
         </nav>
       </div>

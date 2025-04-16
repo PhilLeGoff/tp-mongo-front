@@ -9,11 +9,11 @@ import HottestSlider from "../components/HottestSlider";
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0f172a] text-white font-sans">
-      <div className="max-w-7xl mx-auto ">
-        <SearchBar />
+      <div className="max-w-7xl mx-auto px-4">
         <HottestSlider />
         <AnalyticsPanel />
       </div>
     </div>
   );
 }
+
