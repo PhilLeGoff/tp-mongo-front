@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/rankings" element={<Rankings />} />
-        <Route path="/details" element={<MovieDetails />} />
+        <Route path="/details/:id" element={<MovieDetails />} />
         <Route path="/recommendations" element={<Recommendations />} />
       </Routes>
       <Footer />
