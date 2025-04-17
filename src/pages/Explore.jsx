@@ -9,6 +9,7 @@ export default function Explore() {
   useEffect(() => {
     const fetchSections = async () => {
       const sections = [
+        ["recommended", "recommended"],
         ["newReleases", "new-releases"],
         ["mostPopular", "most-popular"],
         ["criticallyAcclaimed", "critically-acclaimed"],
@@ -34,28 +35,29 @@ export default function Explore() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white px-4 sm:px-6 lg:px-12 py-12">
-      <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-        {Object.entries(exploreData).map(([key, movies]) => (
-          <MovieRow key={key} title={toLabel(key)} movies={movies} />
-        ))}
+  <div className="min-h-screen bg-[#0f172a] text-white px-4 sm:px-6 lg:px-12 py-12">
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+      {Object.entries(exploreData)
+      .filter(([, movies]) => Array.isArray(movies) && movies.length > 0)
+      .map(([key, movies]) => (
+        <MovieRow key={key} title={toLabel(key)} movies={movies} />
+      ))}
       </div>
     </div>
   );
 }
 
 function toLabel(key) {
-  return (
-    {
-      newReleases: "🆕 Upcomming Releases",
-      mostPopular: "🔥 Most Popular Now",
-      criticallyAcclaimed: "🏅 Critically Acclaimed",
-      underrated: "💎 Underrated Treasures",
-      bestFrench: "🇫🇷 Best French Films",
-    bestAction: "💥 Top Action Picks",
-      nostalgia90s: "📼 90s Nostalgia",
-      sciFi: "👽 Sci-Fi Madness",
-      trueStories: "📖 Based on True Stories",
-    }[key] || key
-  );
+  return {
+    recommended: "🎯 Recommanded for you",
+    newReleases: "🆕 New Releases",
+    mostPopular: "🔥 Most Popular Now",
+    criticallyAcclaimed: "🏅 Critically Acclaimed",
+    underrated: "💎 Underrated Treasures",
+    longWatches: "⏳ Long Watches",
+    shortMovies: "⏱️ Short & Sweet",
+    nostalgia90s: "📼 90s Nostalgia",
+    sciFi: "👽 Sci-Fi Madness",
+    trueStories: "📖 Based on True Stories",
+  }[key] || key;
 }
