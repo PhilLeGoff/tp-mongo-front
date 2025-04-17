@@ -8,7 +8,6 @@ import HottestSlider from "../components/HottestSlider";
 import { useSearch } from "../context/SearchContext";
 import { useQuery } from "@tanstack/react-query";
 import axios from 'axios';
-import MovieRow from "../components/MovieRow";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function Home() {
