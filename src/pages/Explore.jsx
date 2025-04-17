@@ -31,6 +31,7 @@ export default function Explore() {
   useEffect(() => {
     const fetchSections = async () => {
       const sections = [
+        ["recommended", "recommended"],
         ["newReleases", "new-releases"],
         ["mostPopular", "most-popular"],
         ["criticallyAcclaimed", "critically-acclaimed"],
@@ -58,7 +59,9 @@ export default function Explore() {
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-      {Object.entries(exploreData).map(([key, movies]) => (
+      {Object.entries(exploreData)
+      .filter(([, movies]) => Array.isArray(movies) && movies.length > 0)
+      .map(([key, movies]) => (
         <MovieRow key={key} title={toLabel(key)} movies={movies} />
       ))}
     </div>
@@ -67,6 +70,7 @@ export default function Explore() {
 
 function toLabel(key) {
   return {
+    recommended: "🎯 Recommanded for you",
     newReleases: "🆕 New Releases",
     mostPopular: "🔥 Most Popular Now",
     criticallyAcclaimed: "🏅 Critically Acclaimed",
