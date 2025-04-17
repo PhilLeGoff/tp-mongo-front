@@ -1,5 +1,6 @@
 import React from "react";
 import BarChart from "./BarChart";
+import Loader from "./Loader";
 
 export default function AnalyticsSection({ title, data, label, className = "" }) {
   const shouldScroll = data.length > 5;
@@ -12,7 +13,7 @@ export default function AnalyticsSection({ title, data, label, className = "" })
           <BarChart data={data} label={label} />
         </div>
       ) : (
-        <p className="text-gray-400 text-sm">No data available</p>
+        <Loader text="Loading movie details..." />
       )}
     </div>
   );

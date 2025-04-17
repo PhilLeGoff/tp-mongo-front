@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MovieService } from "../services/MovieService";
 import axios from "axios";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import ActorRow from "../components/ActorRow";
+import Loader from "../components/Loader";
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -40,7 +42,7 @@ export default function MovieDetails() {
   };
 
   if (!movie) {
-    return <div className="text-white text-center mt-10">Chargement...</div>;
+    return <Loader text="Loading movie details..." />;
   }
 
   const directors = movie.credits?.crew?.filter((p) => p.job === "Director") || [];
@@ -132,21 +134,9 @@ export default function MovieDetails() {
         <h2 className="text-2xl font-bold text-cyan-400 mb-4">Top Cast</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
           {topCast.length > 0 ? (
-            topCast.map((actor, i) => (
-              <div
-                key={i}
-                className="bg-[#1e293b] rounded-xl overflow-hidden shadow-md text-center p-2 cursor-pointer"
-                onClick={() => navigate(`/actor/${actor.id}`)}
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                  alt={actor.name}
-                  className="w-full h-48 object-cover rounded-t-xl"
-                />
-                <div className="text-sm mt-1 text-white font-semibold">{actor.name}</div>
-                <div className="text-xs text-gray-400">{actor.character}</div>
-              </div>
-            ))
+             <div className="max-w-5xl mx-auto mt-10">
+             <ActorRow title="🎭 Top Cast" actors={topCast} />
+           </div>
           ) : (
             <p className="text-gray-400 text-sm">No cast info available.</p>
           )}
