@@ -1,16 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { FaStar, FaRegStar } from "react-icons/fa";
 
 const MovieDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/films/${id}`)
       .then((res) => setMovie(res.data))
       .catch((err) => console.error("Erreur chargement film:", err));
   }, [id]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/favorites")
+      .then((res) => {
+        const exists = res.data.some((fav) => fav.movie_id === movie.id);
+        setIsFavorite(exists);
+      });
+  }, [movie]);
+
+  const toggleFavorite = () => {
+    axios.post("http://localhost:5000/favorites/toggle", {
+      movie_id: movie.id,
+      movie_data: {
+        title: movie.title,
+        genres: movie.genres
+      }
+    }).then(() => {
+      setIsFavorite(!isFavorite);
+    }).catch(console.error);
+  };
 
   if (!movie) {
     return <div className="text-white text-center mt-10">Chargement...</div>;
@@ -28,7 +50,17 @@ const MovieDetail = () => {
         </div>
         <div className="md:col-span-2 flex flex-col justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{movie.title}</h1>
+            <div className="flex items-center justify-between mb-2">
+              <h1 className="text-3xl font-bold">{movie.title}</h1>
+              <button
+              onClick={toggleFavorite}
+              className="text-yellow-400 text-2xl hover:scale-110 transition-transform"
+              title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+              >
+                {isFavorite ? <FaStar /> : <FaRegStar />}
+              </button>
+            </div>
+
             <p className="text-gray-400 text-sm mb-4">{movie.release_date}</p>
             <p className="text-sm text-gray-300 mb-6">{movie.overview}</p>
 
