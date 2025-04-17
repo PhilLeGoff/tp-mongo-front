@@ -10,6 +10,7 @@ import Header from "./components/Header.jsx";
 import "./index.css";
 import Footer from "./components/Footer.jsx";
 import Explore from "./pages/Explore.jsx";
+import ActorDetails from "./pages/ActorDetails.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/explore" element={<Explore />} />
         <Route path="/rankings" element={<Rankings />} />
         <Route path="/details/:id" element={<MovieDetails />} />
+        <Route path="/actor/:actorId" element={<ActorDetails />} />
         <Route path="/recommendations" element={<Recommendations />} />
       </Routes>
       <Footer />

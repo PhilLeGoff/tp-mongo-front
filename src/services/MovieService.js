@@ -18,7 +18,7 @@ export const MovieService = {
   async getAnalyticsOverview() {
     try {
       const res = await axios.get(`${BASE_URL}/analytics/overview`);
-      console.log("res data", res.data)
+      console.log("res data", res.data);
       return res.data;
     } catch (err) {
       console.error("MovieService > getAnalyticsOverview:", err);
@@ -51,7 +51,27 @@ export const MovieService = {
       console.error(`Error fetching ${endpoint}:`, err);
       return [];
     }
+  },
+
+  async getMovieDetails(id) {
+    try {
+      const res = await axios.get(`http://localhost:5000/films/details/${id}`);
+      return res.data;
+    } catch (err) {
+      console.error("MovieService > getMovieDetails:", err);
+      return null;
+    }
+  },
+  
+
+  async getActorDetails(actorId) {
+    try {
+      const res = await axios.get(`http://localhost:5000/actors/${actorId}`);
+      console.log("res:", res)
+      return res.data;
+    } catch (error) {
+      console.error("Error fetching actor details:", error);
+      return null;
+    }
   }
 };
-
-

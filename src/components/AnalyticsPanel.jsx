@@ -16,14 +16,16 @@ export default function AnalyticsPanel() {
     MovieService.getAnalyticsOverview().then(setData);
   }, []);
 
+  useEffect(() => {console.log(data.topMoviesByDecade)},[data])
+
   const genreChartData = data.appreciatedGenres.map((g) => ({
     label: g._id,
     value: g.avgRating,
   }));
 
   const decadeChartData = data.topMoviesByDecade.map((d) => ({
-    label: d.movie.title,
-    value: d.movie.vote_average,
+    label: d.title,
+    value: d.vote_average,
   }));
 
   const topRatedChartData = data.topRated.map((m) => ({
