@@ -1,20 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { MovieService } from "../services/MovieService";
 import axios from "axios";
+import { FaStar, FaRegStar } from "react-icons/fa";
 
-const MovieDetail = () => {
+export default function MovieDetails() {
   const { id } = useParams();
-  const [movie, setMovie] = useState(null);
+  const navigate = useNavigate();
 
+  const [movie, setMovie] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  // Fetch movie details
   useEffect(() => {
-    axios.get(`http://localhost:5000/films/${id}`)
-      .then((res) => setMovie(res.data))
-      .catch((err) => console.error("Erreur chargement film:", err));
+    MovieService.getMovieDetails(id).then(setMovie);
   }, [id]);
+
+  // Check if movie is favorite
+  useEffect(() => {
+    if (!movie) return;
+    axios.get("http://localhost:5000/favorites")
+      .then((res) => {
+        const exists = res.data.some((fav) => fav.movie_id === movie.id);
+        setIsFavorite(exists);
+      });
+  }, [movie]);
+
+  // Toggle favorite
+  const toggleFavorite = () => {
+    axios.post("http://localhost:5000/favorites/toggle", {
+      movie_id: movie.id,
+      movie_data: {
+        title: movie.title,
+        genres: movie.genres
+      }
+    }).then(() => {
+      setIsFavorite(!isFavorite);
+    }).catch(console.error);
+  };
 
   if (!movie) {
     return <div className="text-white text-center mt-10">Chargement...</div>;
   }
+
+  const directors = movie.credits?.crew?.filter((p) => p.job === "Director") || [];
+  const writers = movie.credits?.crew?.filter(
+    (p) => p.job === "Writer" || p.department === "Writing"
+  ) || [];
+  const topCast = movie.credits?.cast?.slice(0, 6) || [];
+  const trailer = movie.videos?.results?.find((v) => v.type === "Trailer");
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white font-sans py-10 px-4">
@@ -26,33 +60,98 @@ const MovieDetail = () => {
             className="w-full h-auto rounded-lg shadow-md"
           />
         </div>
+
         <div className="md:col-span-2 flex flex-col justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{movie.title}</h1>
-            <p className="text-gray-400 text-sm mb-4">{movie.release_date}</p>
-            <p className="text-sm text-gray-300 mb-6">{movie.overview}</p>
+            <div className="flex items-center justify-between mb-2">
+              <h1 className="text-3xl font-bold">{movie.title}</h1>
+              <button
+                onClick={toggleFavorite}
+                className="text-yellow-400 text-2xl hover:scale-110 transition-transform"
+                title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+              >
+                {isFavorite ? <FaStar /> : <FaRegStar />}
+              </button>
+            </div>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              {movie.genres?.map((genre, i) => (
-                <span
-                  key={i}
-                  className="bg-cyan-700 text-white text-xs px-3 py-1 rounded-full"
-                >
-                  {genre.name}
-                </span>
-              ))}
+            <p className="text-gray-400 text-sm mb-4">{movie.release_date || "Unknown release date"}</p>
+
+            <div className="text-sm text-gray-400 flex flex-wrap gap-2 mb-4">
+              <span>{movie.genres?.map((g) => g.name).join(", ") || "Genres not listed"}</span>
+              <span>•</span>
+              <span>
+                {movie.runtime
+                  ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}min`
+                  : "Runtime not available"}
+              </span>
+            </div>
+
+            {trailer && (
+              <a
+                href={`https://www.youtube.com/watch?v=${trailer.key}`}
+                target="_blank"
+                className="inline-block bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-full text-white text-sm font-semibold"
+                rel="noreferrer"
+              >
+                ▶️ Watch Trailer
+              </a>
+            )}
+
+            <div className="mt-6">
+              <h2 className="font-semibold text-lg mb-1">Overview</h2>
+              <p className="text-gray-300 text-sm">{movie.overview || "No overview available."}</p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-6">
+              <div>
+                <h3 className="font-bold">🎬 Director(s)</h3>
+                <ul className="text-sm text-gray-300">
+                  {directors.length > 0 ? (
+                    directors.map((p, i) => <li key={i}>{p.name}</li>)
+                  ) : (
+                    <li>No director info</li>
+                  )}
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold">🖋️ Writers</h3>
+                <ul className="text-sm text-gray-300">
+                  {writers.length > 0 ? (
+                    writers.map((p, i) => <li key={i}>{p.name}</li>)
+                  ) : (
+                    <li>No writer info</li>
+                  )}
+                </ul>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div className="text-sm text-gray-400 mt-4">
-            <p>⭐ Note : <span className="text-white font-semibold">{movie.vote_average}</span></p>
-            <p>🗳️ Votes : {movie.vote_count}</p>
-            <p>🗣️ Langue originale : {movie.original_language?.toUpperCase()}</p>
-          </div>
+      <div className="max-w-5xl mx-auto mt-10">
+        <h2 className="text-2xl font-bold text-cyan-400 mb-4">Top Cast</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+          {topCast.length > 0 ? (
+            topCast.map((actor, i) => (
+              <div
+                key={i}
+                className="bg-[#1e293b] rounded-xl overflow-hidden shadow-md text-center p-2 cursor-pointer"
+                onClick={() => navigate(`/actor/${actor.id}`)}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                  alt={actor.name}
+                  className="w-full h-48 object-cover rounded-t-xl"
+                />
+                <div className="text-sm mt-1 text-white font-semibold">{actor.name}</div>
+                <div className="text-xs text-gray-400">{actor.character}</div>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-400 text-sm">No cast info available.</p>
+          )}
         </div>
       </div>
     </div>
   );
-};
-
-export default MovieDetail;
+}
