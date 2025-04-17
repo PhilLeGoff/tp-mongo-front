@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearch } from "../context/SearchContext"; // ajuste le chemin
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function SearchBar() {
   // const [query, setQuery] = useState("");
   const [input, setInput] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [debouncedInput, setDebouncedInput] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { query, setQuery, genre, setGenre } = useSearch();
 
   // Debounce
@@ -59,6 +60,16 @@ export default function SearchBar() {
       setGenre(genre.name);
     }
     setDropdownOpen(false);
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+
+    // Only navigate if not already on Home
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
   };
 
   return (
@@ -111,9 +122,12 @@ export default function SearchBar() {
             <input
               type="search"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={handleInputChange}
               placeholder="Search movies..."
-              className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+              className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg
+              border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500
+              dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+              dark:focus:border-blue-500"
             />
             <button type="submit"
                     className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
