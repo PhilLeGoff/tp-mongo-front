@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Loader from "../components/Loader";
+import MovieRow from "../components/MovieRow";
 
 const Rankings = () => {
-  const [genreData, setGenreData] = useState([]);
+  const [genreData, setGenreData] = useState(null);
 
   useEffect(() => {
     const fetchPopularByGenre = async () => {
       try {
         const { data: genres } = await axios.get("http://localhost:5000/genres/popular");
-        console.log("Genres API response:", genres);
-
 
         const genrePromises = genres.map(async (genre) => {
           const response = await axios.get(`http://localhost:5000/genres/${genre.name}`);
@@ -29,25 +29,19 @@ const Rankings = () => {
     fetchPopularByGenre();
   }, []);
 
+  if (!genreData) {
+    return <Loader text="Loading movie details..." />;
+  }
+
   return (
-    <div className="space-y-6">
-      {genreData.map(({ genre, movies }) => (
-        <div key={genre}>
-          <h2 className="text-xl font-bold mb-2">{genre}</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {movies.map((movie) => (
-              <div key={movie.id} className="p-2 border rounded">
-                <img
-                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                  alt={movie.title}
-                  className="w-full rounded mb-1"
-                />
-                <p className="text-sm font-medium">{movie.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+    <div className="min-h-screen bg-[#0f172a] text-white px-4 sm:px-6 lg:px-12 py-12">
+      <div className="space-y-12">
+        {genreData
+          .filter(({ movies }) => movies.length > 0)
+          .map(({ genre, movies }) => (
+            <MovieRow key={genre} title={genre} movies={movies} />
+          ))}
+      </div>
     </div>
   );
 };
