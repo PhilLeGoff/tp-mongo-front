@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function BarChart({ data = [], label = "Value" }) {
-  // Pour déterminer la largeur relative (valeur max = 100%)
   const maxValue = Math.max(...data.map((d) => d.value || 0), 10);
 
   return (
@@ -11,7 +10,7 @@ export default function BarChart({ data = [], label = "Value" }) {
           <div className="flex justify-between text-sm text-gray-200 mb-1">
             <span className="truncate">{item.label}</span>
             <span className="ml-2 font-medium text-cyan-400">
-              {/* {item.value.toFixed(1)} */}
+              {item.value?.toFixed(1)} {/* ✅ Show numeric value */}
             </span>
           </div>
           <div className="w-full h-4 bg-gray-700 rounded">
