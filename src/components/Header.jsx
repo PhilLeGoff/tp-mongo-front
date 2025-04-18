@@ -1,8 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 
 export default function Header() {
+  const navigate = useNavigate()
   const linkBase =
     "px-4 py-1 rounded-full font-medium text-sm transition-colors duration-150 backdrop-blur-sm";
 
@@ -16,7 +17,7 @@ export default function Header() {
       <div className="max-full mx-auto py-4 grid grid-cols-1 md:grid-cols-3 items-center gap-4">
         {/* Logo à gauche */}
         <div className="flex justify-center">
-          <h1 className="text-2xl font-bold text-cyan-400 tracking-wide drop-shadow">
+          <h1 className="text-2xl hover:cursor-pointer font-bold text-cyan-400 hover:text-cyan-700 tracking-wide drop-shadow" onClick={() => navigate("/")}>
             🎬 Movie Explorer
           </h1>
         </div>
