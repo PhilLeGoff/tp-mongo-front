@@ -23,7 +23,7 @@ export default function MovieDetails() {
     if (!movie) return;
     axios.get("http://localhost:5000/favorites")
       .then((res) => {
-        const exists = res.data.some((fav) => fav.movie_id === movie.id);
+        const exists = res.data.some((fav) => fav.movie_id === movie._id);
         setIsFavorite(exists);
       });
   }, [movie]);
@@ -31,7 +31,7 @@ export default function MovieDetails() {
   // Toggle favorite
   const toggleFavorite = () => {
     axios.post("http://localhost:5000/favorites/toggle", {
-      movie_id: movie.id,
+      movie_id: movie._id,
       movie_data: {
         title: movie.title,
         genres: movie.genres
