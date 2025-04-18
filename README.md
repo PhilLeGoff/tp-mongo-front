@@ -1,61 +1,67 @@
-# Movie Explorer – Frontend React
+# Frontend – Movie Explorer
 
-Ce dépôt correspond au frontend de l'application **Movie Explorer**, développé avec **React**, **Vite**, **TailwindCSS** et divers outils modernes pour une interface rapide, interactive et responsive.
-
----
-
-## Objectif de l'application
-
-**Movie Explorer** permet d'explorer et d'analyser une base de données de films grâce à une interface web dynamique, connectée à un backend Flask. Ce frontend propose :
-
-- Une navigation fluide entre les pages
-- Des visualisations interactives avec Chart.js
-- Des appels API centralisés
-- Une expérience responsive adaptée à tous les supports
+Ce dépôt contient l'interface utilisateur du projet **Movie Explorer**, développée avec **React** et **Vite**. Elle consomme l'API Flask hébergée dans le projet `tp-mongo-back` et propose une expérience fluide pour explorer les films, leurs genres, les statistiques, et bien plus encore.
 
 ---
 
-## Structure du projet
+## Installation locale (sans Docker)
 
-```
-tp-mongo-front/
-├── public/                 # Fichiers statiques
-├── src/
-│   ├── components/         # Composants réutilisables
-│   ├── pages/              # Pages principales
-│   ├── services/           # Appels aux APIs
-│   └── main.jsx            # Point d’entrée React
-├── Dockerfile              # Pour déploiement Docker
-├── index.html              # Fichier HTML principal
-├── package.json            # Dépendances et scripts
-├── tailwind.config.js      # Configuration TailwindCSS
-└── vite.config.js          # Configuration Vite
-```
+Assurez-vous d'avoir **Node.js 20+** installé.
 
----
-
-## Lancer l’application en mode développement
+### 1. Installation des dépendances
 
 ```bash
 npm install
+```
+
+### 2. Lancement du serveur de développement
+
+```bash
 npm run dev
 ```
 
-L'application sera accessible à : http://localhost:5173
+L'application sera disponible sur `http://localhost:5173`
 
 ---
 
-## Lancer avec Docker
+## Accès via Docker
+
+L'application est intégrée dans le projet global `tp-mongo` via un fichier `docker-compose.yml`. Depuis ce dossier parent, exécutez simplement :
 
 ```bash
-docker build -t tp-mongo-frontend .
-docker run -p 8080:80 tp-mongo-frontend
+docker-compose up --build
 ```
-
-> L'app sera servie avec nginx sur http://localhost:8080
 
 ---
 
-## Licence
+## Fonctionnalités principales
 
-Projet pédagogique à but démonstratif. Libre à vous de le modifier et réutiliser.
+- Accueil avec affichage des films populaires
+- Recherche dynamique avec filtres (titre, genre)
+- Pages de détails : films et acteurs
+- Section **Classements** avec les films populaires par genre
+- Page **Statistiques** avec des graphiques analytiques
+- Recommandations thématiques et personnalisées
+- Système de favoris (stockés par IP)
+
+---
+
+## Organisation du code
+
+```txt
+src/
+├── assets/           # Fichiers statiques (logo, icônes...)
+├── components/       # UI génériques (Header, MovieRow...)
+├── context/          # Contexte global (ex: recherche)
+├── pages/            # Pages principales (Home, Analytics...)
+├── services/         # Appels à l'API backend (Axios)
+├── App.jsx           # Configuration des routes
+└── main.jsx          # Point d'entrée de l'application
+```
+
+---
+
+## Remarques
+
+- Ce frontend est prévu pour fonctionner avec [`tp-mongo-back`](https://github.com/PhilLeGoff/tp-mongo-back).
+- Le projet est intégré dans le dépôt global [`tp-mongo`](https://github.com/Linnaelle/tp-mongo) pour un déploiement via Docker.
