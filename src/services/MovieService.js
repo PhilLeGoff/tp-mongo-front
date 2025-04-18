@@ -73,5 +73,16 @@ export const MovieService = {
       console.error("Error fetching actor details:", error);
       return null;
     }
+  },
+
+  async updateDB() {
+    try {
+      const res = await axios.get("http://localhost:5000/films/update-latest");
+      console.log("res:", res)
+      return res.data;
+    } catch (error) {
+      console.error("Error updating db", error);
+      return null
+    }
   }
 };
