@@ -1,6 +1,6 @@
 function PowerBIEmbed({ src }) {
   return (
-    <div className="w-full h-[600px] mb-8 rounded-lg overflow-hidden shadow-lg">
+    <div className="w-full h-[550px] mb-8 rounded-lg overflow-hidden shadow-lg">
       <iframe
         title="Power BI Report"
         width="100%"
