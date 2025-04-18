@@ -130,8 +130,7 @@ export default function MovieDetails() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto mt-10">
-        <h2 className="text-2xl font-bold text-cyan-400 mb-4">Top Cast</h2>
+      <div className="max-w-5xl mx-auto mt-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
           {topCast.length > 0 ? (
              <div className="max-w-5xl mx-auto mt-10">

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { MovieService } from "../services/MovieService";
+import {useNavigate} from "react-router-dom"
 
 export default function HottestSlider() {
   const [movies, setMovies] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     MovieService.getHottest().then(setMovies);
@@ -26,7 +28,7 @@ export default function HottestSlider() {
       >
         {movies.map((movie, index) => (
           <SwiperSlide key={index}>
-            <div className="bg-gradient-to-br from-[#1e293b] to-[#0f172a] text-white rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105">
+            <div className="bg-gradient-to-br hover:cursor-pointer from-[#1e293b] to-[#0f172a] text-white rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105" onClick={() => navigate(`/details/${movie.id}`)}>
               <div className="aspect-[2/3]">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
