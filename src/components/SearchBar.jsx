@@ -31,6 +31,13 @@ export default function SearchBar() {
     },
   });
 
+  useEffect(() => {
+    console.log("genre: ", genre)
+    if ((genre && genre !== "") && location.pathname !== "/search") {
+      navigate("/search");
+    } else if (genre === "") navigate("/")
+  }, [genre]);
+
   const handleGenreSelect = (genre) => {
     setGenre(genre?.name || "");
     setDropdownOpen(false);
