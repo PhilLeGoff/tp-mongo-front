@@ -38,9 +38,17 @@ export default function SearchBar() {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setQuery(value);
-    if (location.pathname !== "/") navigate("/");
+    setInput(value); // ✅ just update local input
+    if (location.pathname !== "/search") {
+      navigate("/search");
+    } else if (value === "") navigate("/")
   };
+  
+  useEffect(() => {
+    setQuery(debouncedInput || "");
+  }, [debouncedInput]);
+
+  useEffect(() => console.log("query", input), [input])
 
   return (
     <form className="w-full mx-auto" onSubmit={(e) => e.preventDefault()}>
@@ -100,8 +108,8 @@ export default function SearchBar() {
         <div className="relative w-full">
           <input
             type="search"
-            value={query}
-            onChange={handleInputChange}
+            value={input}
+            onChange={handleInputChange}          
             placeholder="Search movies..."
             className="block p-2.5 w-full z-20 text-sm text-white bg-[#1e293b] border border-gray-600 rounded-e-lg placeholder-gray-400
              focus:outline-none focus:ring-0 focus:border-gray-600"

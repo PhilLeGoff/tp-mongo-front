@@ -13,6 +13,7 @@ import Explore from "./pages/Explore.jsx";
 import ActorDetails from "./pages/ActorDetails.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SearchProvider } from "./context/SearchContext.jsx";
+import SearchResults from "./pages/SearchResults.jsx";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/details/:id" element={<MovieDetails />} />
             <Route path="/actor/:actorId" element={<ActorDetails />} />
             <Route path="/recommendations" element={<Recommendations />} />
+            <Route path="/search" element={<SearchResults />} />
           </Routes>
           <Footer />
         </BrowserRouter>

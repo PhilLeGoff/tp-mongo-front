@@ -37,9 +37,6 @@ export default function Header() {
           <NavLink to="/analytics" className={getLinkClass}>
             Analytics
           </NavLink>
-          <NavLink to="/rankings" className={getLinkClass}>
-            Rankings
-          </NavLink>
         </nav>
       </div>
     </header>
